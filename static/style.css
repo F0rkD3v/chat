@@ -23,6 +23,13 @@ main {
     background-color: #304ffe;
     color: #ffffff;
     height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.changeNick{
+    position: absolute;
+    right: 10px;
 }
 
 #form {

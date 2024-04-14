@@ -4,7 +4,6 @@ const path = require('path');
 
 const pathToIndex = path.join(__dirname, 'static', 'index.html');
 const indexHtmlFile = fs.readFileSync(pathToIndex);
-
 const scriptJsFile = fs.readFileSync(path.join(__dirname, 'static', 'script.js'));
 const styleCssFile = fs.readFileSync(path.join(__dirname, 'static', 'style.css'))
 
@@ -19,3 +18,19 @@ switch(req.url){
 });
 
 server.listen(3000);
+
+const {Server} = require('socket.io');
+const io = new Server(server);
+
+io.on('connection', (socket) =>{
+    console.log('a user connected. ID: '+ socket.id);
+    let userNickname = 'user';
+
+    socket.on('set_nickname', (nickname)=> {
+        userNickname = nickname;
+    });
+
+    socket.on('new_message', (message) => {
+        io.emit('message', userNickname + ' : ' + message)
+    });
+});
